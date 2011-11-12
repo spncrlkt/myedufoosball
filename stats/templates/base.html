@@ -1,0 +1,22 @@
+<html> <head>
+<title>{% block title %}MyEDU Foosball Tracker{% endblock %}</title>
+<link rel="stylesheet" href="/media/style.css"/>
+<script type="text/javascript" src="/media/jquery-1.6.4.js"></script>
+</head>
+<body>
+<div class="nav container">
+<a href="/games/">Record Games</a>
+<a href="/players/">Players</a>
+<a href="/teams/">Teams</a>
+<a href="/games/singles/">Singles</a>
+<a href="/games/doubles/">Doubles</a>
+<a href="/">Home</a>
+</div>
+
+<div class="container">
+<div class="super_list">
+{% block content %}{% endblock %}
+</div>
+</div>
+</body>
+</html>

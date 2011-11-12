@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="list">
+  <h2> Teams </h2>
+  <form method="POST" action="/createteam/">{% csrf_token %}
+    <label for="team_player_1">First member</label>
+    <select id="team_player_1" name="team_player_1">
+      {% for player in player_list %}
+      <option value="{{ player.slug }}">{{ player.name }}</option>
+      {% endfor %}
+    </select>
+    <label for="team_player_2">Second member</label>
+    <select id="team_player_2" name="team_player_2">
+      {% for player in player_list %}
+      <option value="{{ player.slug }}">{{ player.name }}</option>
+      {% endfor %}
+    </select>
+    <input type="submit" value="Add Team"/>
+  </form>
+  <ul id="teams">
+    {% for team in team_list %}
+    <li><a href="{{ team.get_absolute_url }}">{{ team.player_1.name }} - {{ team.player_2.name }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

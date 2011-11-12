@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="list">
+  <h2>Singles Games</h2>
+  {% for game in singles_game_list %}
+  <div class="game">
+  <a href="{{ game.get_absolute_url }}">{{ game.player_1.name }} VS {{ game.player_2.name }} </a><br>
+    {{ game.player_1_points }} - {{ game.player_2_points }}, 
+  <small>recorded {{ game.date_played }}</small>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

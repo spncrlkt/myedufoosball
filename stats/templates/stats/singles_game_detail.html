@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="list">
+<div class="both_teams">
+<div id="player_1" class="home_team">
+  <div class="inner_team">
+  <h2><a href="{{ game.player_1.get_absolute_url }}">{{ game.player_1.name }}</a></h2><br/>
+  <h3>Rating: {{ game.player_1.rating }}</h3>
+  <h3>Score: {{ game.player_1_points }}</h3>
+  </div>
+</div>
+<div id="player_2" class="away_team">
+  <div class="inner_team">
+  <h2><a href="{{ game.player_2.get_absolute_url }}">{{ game.player_2.name }}</a></h2><br/>
+  <h3>Rating: {{ game.player_2.rating }}</h3>
+  <h3>Score: {{ game.player_2_points }}</h3>
+  </div>
+</div>
+<h3>Match played:</br>{{ game.date_played }}</h3>
+</div>
+</div>
+
+{% endblock %}

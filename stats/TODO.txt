@@ -1,0 +1,4 @@
+edit/remove
+sanctioned/non-sanctioned
+player search
+talk to zack about interface

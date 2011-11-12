@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="list">
+<div class="team_detail">
+  <h2> <a href="{{ team.player_1.get_absolute_url }}">{{ team.player_1.name }}</a> - 
+       <a href="{{ team.player_2.get_absolute_url }}">{{ team.player_2.name }}</a> </h2>
+  <h2>Rating:   {{ team.rating }} </h2>
+  <div class ="game_detail">
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp; Recently Played Games </h3>
+    <ul>
+      {% for game in game_list %}
+      <li><a href="{{ game.get_absolute_url }}"> {{ game.team_a }} VERSUS {{ game.team_b }}</a><br/>
+	SCORE: {{ game.team_a_points }} - {{ game.team_b_points }}, 
+        <small>recorded {{ game.date_played }}</small></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="list">
+<div id="player_detail">
+  <h2><a href="/teams/{{ player.slug }}">{{ player.name }}</a></h2>
+  <h2>Rating: {{ player.rating }}</h2>
+  <div class ="game_detail">
+    <h3>&nbsp;&nbsp;&nbsp;&nbsp; Recently Played Games </h3>
+    <ul>
+      {% for game in game_list %}
+      <li><a href="{{ game.get_absolute_url }}"> 
+	  {{ game.player_1.name }} VERSUS {{ game.player_2.name }}</a><br/>
+	  SCORE: {{ game.player_1_points }} - {{ game.player_2_points }}, 
+	  <small>recorded {{ game.date_played }}</small>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+</div>
+{% endblock %}
