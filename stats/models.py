@@ -37,11 +37,13 @@ def update_rating(game_type, entity_1, entity_2, entity_1_points, entity_2_point
     else:
         rounded_diff=400
     expected_score = expected_scores[rounded_diff]
+    if entity_1.rating < entitiy_2.rating:
+        expected_score = 1 - expected_score
     entity_1_points = math.floor(entity_1_points/10)
     entity_2_points = math.floor(entity_2_points/10)
     entity_1.rating = entity_1.rating + 30*(entity_1_points - expected_score)
     entity_1.save()
-    entity_2.rating = entity_2.rating + 30*(entity_2_points - expected_score)
+    entity_2.rating = entity_2.rating + 30*(entity_2_points - (1 - expected_score))
     entity_2.save()
 
 class SinglesGame(models.Model):
