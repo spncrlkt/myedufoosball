@@ -1,26 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="list">
+<div class="motto">
+<span class="motto"><b>Post</b> a game!</span>
+</div>
 <div id="addgame">
-  <h2>Add A Game!</h2>
   <form method="POST" action="/addgame/">{% csrf_token %}
-    <select id="game_type" name="game_type">
+    <select id="game_type" name="game_type" class="post_select">
       <option value="singles">Singles</option>
       <option value="doubles">Doubles</option>
-    </select><br/>
-    <select id="name_a_1" name="name_a_1" class="team_a">
+    </select><br/><br/><br/>
+    <select id="name_a_1" name="name_a_1" class="team_a post_select">
+      <option value="%">Select a Player</option>
+      {% for player in player_list %}
+      <option value="{{player.slug}}">{{player.name}}</option>
+      {% endfor %}
+    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <select id="name_b_1" name="name_b_1" class="team_b post_select">
       <option value="%">Select a Player</option>
       {% for player in player_list %}
       <option value="{{player.slug}}">{{player.name}}</option>
       {% endfor %}
     </select>
-    <select id="name_a_2" name="name_a_2" class="team_a second_player hide_second_player">
+    <div class="second_player hide_second_player">
+    <br/><br/><br/>
+    </div>
+    <select id="name_a_2" name="name_a_2" class="team_a post_select second_player hide_second_player">
       <option value="%">Select a Player</option>
       {% for player in player_list %}
       <option value="{{player.slug}}">{{player.name}}</option>
       {% endfor %}
-    </select> <label for="team_a_points">Points:</label>
-    <select id="team_a_points" name="team_a_points">
+    </select>
+    <span class="second_player hide_second_player">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <select id="name_b_2" name="name_b_2" class="team_b post_select second_player hide_second_player">
+      <option value="%">Select a Player</option>
+      {% for player in player_list %}
+      <option value="{{player.slug}}">{{player.name}}</option>
+      {% endfor %}
+    </select>
+    <br/><br/><br/>
+    <label for="team_a_points">Score:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <select id="team_a_points" name="team_a_points" class="post_score">
       <option value="0">0</option>
       <option value="1">1</option>
       <option value="2">2</option>
@@ -32,20 +52,9 @@
       <option value="8">8</option>
       <option value="9">9</option>
       <option value="10">10</option>
-    </select><br/>
-    <select id="name_b_1" name="name_b_1" class="team_b">
-      <option value="%">Select a Player</option>
-      {% for player in player_list %}
-      <option value="{{player.slug}}">{{player.name}}</option>
-      {% endfor %}
-    </select>
-    <select id="name_b_2" name="name_b_2" class="team_b second_player hide_second_player">
-      <option value="%">Select a Player</option>
-      {% for player in player_list %}
-      <option value="{{player.slug}}">{{player.name}}</option>
-      {% endfor %}
-    </select> <label for="team_b_points">Points:</label>
-    <select id="team_b_points" name="team_b_points">
+    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for="team_b_points">Score:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <select id="team_b_points" name="team_b_points" class="post_score">
       <option value="0">0</option>
       <option value="1">1</option>
       <option value="2">2</option>
@@ -57,31 +66,13 @@
       <option value="8">8</option>
       <option value="9">9</option>
       <option value="10">10</option>
-    </select><br/>
-    <input type="submit" value="Record Game">
+    </select><br/><br/><br/>
+   <!-- <input type="submit" value="POST"/> -->
+   <button type="submit" id="post_button">
+     <img src="/media/PostButton-06.png"/>
+   </button>
   </form>
-</div><br/><br/>
-<div class="recent">
-<div class="recent_games recent_left">
-  <h2>Singles</h2>
-  {% for game in singles_game_list %}
-  <div class="game">
-  <a href="{{ game.get_absolute_url }}">{{ game.player_1.name }} VS {{ game.player_2.name }} </a><br>
-  {{ game.player_1_points }} - {{ game.player_2_points }}, 
-  <small>recorded {{ game.date_played }}</small>
-  </div>
-  {% endfor %}
-</div>
-<div class="recent_games recent_right">
-  <h2>Doubles</h2>
-  {% for game in doubles_game_list %}
-  <div class="game">
-  <a href="{{ game.get_absolute_url }}">{{ game.team_a }} VS {{ game.team_b }} </a><br>
-  {{ game.team_a_points }} - {{ game.team_b_points }},
-  <small>recorded {{ game.date_played }}</small>
-  </div>
-  {% endfor %}
-</div><br style="clear:both;"/><br style="clear:both;"/><br style="clear:both;"/>
+  <a href="/games/singles/"><small>Not in our system yet? Sign up!</small></a>
 </div>
 </div>
 <script src="../media/addgames.js"></script>

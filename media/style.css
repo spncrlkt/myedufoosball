@@ -1,17 +1,57 @@
 body {
-    font-family: georgia;
-}
-.container {
-    width: 80%;
-    margin-top: 2em;
-    margin-left: auto;
-    margin-right: auto;
+    font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color:#DADADA;
+    margin:0;
+    position: relative;
 }
 
-.both_teams {
+a {
+    color: black;
+    text-decoration:none;
+}
+
+.container {
     width: 100%;
-    height: 80%;
-    text-align: center;
+    height:100%;
+    min-height:730px;
+    padding-top:49px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#DADADA;
+    background-image:url('/media/clouds_gray.png');
+    background-repeat: repeat-x;
+    background-position: 0px 100px;
+}
+
+.nav {
+    width:100%;
+    height:48px;
+    background-image:url('/media/MenuBar-05.png');
+    background-repeat: repeat-x;
+    position:absolute;
+}
+.nav-links > a {
+    top:50%;
+    padding:15px;
+    position:relative;
+    color:#DADADA;
+    text-decoration:none;
+    font-size:smaller;
+}
+
+.nav-links {
+    display:inline;
+    position:absolute;
+    margin:0 10px;
+    right: 30%;
+    top:30%;
+}
+
+.nav-body {
+    height:100%;
+    position:relative;
+    margin:0 auto;
+    width:900px;   
 }
 
 .home_team {
@@ -19,6 +59,11 @@ body {
     border: 1px solid white;
     margin: auto;
     float: left;
+}
+
+div.divider {
+    width:18%;
+    display:inline;
 }
 
 .away_team {
@@ -29,14 +74,261 @@ body {
 }
 
 .super_list {
-    border: 1px solid grey;
+    
+    width:900px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .list {
-    padding:6%;
+    margin-top:30px;
+    overflow:auto;
+    min-height:600px;
+    padding-bottom:5px;
+}
+
+div .motto {
+    width:100%;
+    margin:15px 0px;
+}
+
+span.motto {
+    font-size:1.8em;
+}
+
+div .recent {
+    border: black solid 1px;
+    float:left;
+    background-color:white;
+    margin-top:10px;
+    height:540px;
+    width:60%;
+}
+
+div .box_top {
+    width:100%;
+    height:20px;
+    background-image:url('/media/OrangeGradient-13.png');
+    background-repeat: repeat-x;
+    
+}
+span.box_message {
+    color:white;
+    text-align:left;
+    margin-left:15px;
+    margin-top:10px;
+    margin-bottom:10px;
+    font-size:.9em;
+}
+
+div .index_right {
+    width:30%;
+    height:540px;
+    margin-right:5px;
+    float:right;
+    margin-top:10px;
+}
+
+div .top_players {
+    border: black solid 1px;
+    width:100%;
+    height:200px;
+    background-color:white;
+}
+
+div .top_doubles {
+    width:100%;
+    height:540px;
+    background-color:white;
+    border: 1px solid black;
+}
+
+.box_sidebar {
+    margin-top:10px;
+    padding:20px;
+}
+
+div .top_singles {
+    width:100%;
+    height:540px;
+    background-color:white;
+    border: 1px solid black;
+}
+
+div .top_inner {
+    height:96%;
+    overflow-x:hidden;
+    overflow-y:scroll;
+}
+
+div .top_teams {
+    border: black solid 1px;
+    width: 100%;
+    height:310px;
+    margin-top:30px;
+    background-color:white;
+}
+
+div .both_teams {
+    background-color:white;
+    margin-top:60px;
+    height:540px;
+    width:98%;
+    border: 1px solid black;
+}
+
+div .date {
+    margin:15px;
+    margin-top:30px;
+}
+span.date {
+    text-align:left;
+    margin:10px;
+    color:grey;
+    font-size:.9em;
+}
+
+img.divider {
+    margin-left:70px;
+    margin-right:auto;
+}
+
+span.current_rating {
+    color:grey;
+    font-size:2em;
+}
+
+span.rating_title {
+    color:grey;
+    font-size:1.2em;
+}
+
+select.post_select {
+    height:26px;
+    width:200px;
+}
+
+.detail_mini {
+    float:left;
+    margin-right: 19px;
+    background-color:white;
+    height:80px;
+    border: 1px solid black;
+}
+.detail_mini img {
+    height:50px;
+    float:left;
+}
+
+.current_rank {
+    margin-left:0px;
+    width:140px;
+    text-align:center;
+}
+
+.current_rating {
+    width:140px;
+    text-align:center;
+}
+
+.win_ratio {
+    width:205px;
+    text-align:center;
+}
+
+.loss_ratio {
+    width:205px;
+    text-align:center;
+}
+
+.avg_points {
+    width:128px;
+    margin-right:0px;
+    float:left;
+    text-align:center;
+    background-color:white;
+    height:80px;
+    border: 1px solid black;
+}
+
+.detail_top {
+    overflow:auto;
+}
+
+.detail_recent_inner {
+    width:100%;
+    height:400px;
+    background-color:white;
+    overflow-y:scroll;
+    overflow-x:hide;
+}
+
+.detail_inner {
+    position:relative;
+    font-size:1.6em;
+    top:20px;
+}
+
+.detail_recent {
+    border:1px solid black;
+}
+
+.list_spacer {
+    height:50px;
+    width:100%;
+}
+
+.user_form {
+    
+}
+
+.gamehr {
+    width:75%;
+}
+
+.game {
+    margin: 30px;
+}
+
+span.sidebar_list {
+    font-size:.8em;
+    font-style:bold;
+}
+
+.box_sidebar {
+    font-size:.8em;
+    font-style:bold;
+}
+
+.sidebar_team_players {
+    float:left;
+    width:80%;
+}
+
+.sidebar_team_rating {
+    float:right;
+    width:20%;
+}
+
+select.post_score {
+    height:26px;
+    width:60px;
+}
+
+#post_button {
+    background-color:white;
+    border:none;
 }
 
 .list h2 {
+    text-align: center;
+}
+
+#player_name_div {
+    text-align: center;
+}
+
+.list h4 {
     text-align: center;
 }
 
@@ -44,8 +336,18 @@ body {
     padding: 8%;
     text-align:center;
 }
-.recent {
-    position:relative;
+
+.inner_team a {
+    font-size:1.6em;
+}
+
+.crown {
+    width:100%;
+    height:50px;
+}
+
+.crown img {
+    margin-left:40%;
 }
 
 .recent_left {
@@ -61,13 +363,11 @@ body {
 }
 
 #addgame {
-    text-align:center;
+    background:white;
+    padding:40px;
+    border:1px solid black;
 }
 
-a {
-    color: #46a1ff;
-    text-decoration:none;
-}
 
 .show_second_player {
     display: inline;

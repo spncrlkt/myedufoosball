@@ -1,17 +1,19 @@
-from django.http import HttpResponseRedirect, HttpResponseServerError
+from django.http import HttpResponseRedirect, HttpResponseServerError, HttpResponse
 from django.shortcuts import render
 from models import Player, Team, SinglesGame, DoublesGame
+import json
 
 def index(request):
+    singles_games = SinglesGame.objects.all()[:5]
     return render(request, 'stats/index.html',
-                  {'player_list': Player.objects.all(), 'team_list': Team.objects.all()},
+                  {'player_list': Player.objects.all().order_by('-rating'), 
+                   'team_list': Team.objects.all().order_by('-rating'),
+                   'game_list': singles_games},
                   content_type="html")
 
 def games(request):
     return render(request, 'stats/addgame.html',
-                  {'player_list': Player.objects.all(), 'team_list': Team.objects.all(),
-                   'singles_game_list': SinglesGame.objects.all().order_by('-date_played')[:5],
-                   'doubles_game_list': DoublesGame.objects.all().order_by('-date_played')[:5]},
+                  {'player_list': Player.objects.all(), 'team_list': Team.objects.all()},
                   content_type="html")
 
 def players(request):
@@ -21,12 +23,38 @@ def players(request):
 
 def player_detail(request, slug):
     current_player = Player.objects.filter(slug=slug)[0]
+    all_players = Player.objects.all().order_by('-rating')
+    player_count = all_players.count()
+    rank_num = 0
+    for index, player in enumerate(all_players):
+        if player.slug == slug:
+            rank_num = index+1
+
     game_list_1 = SinglesGame.objects.filter(player_1=current_player)
+    game_list_1_wins = game_list_1.filter(player_1_points=10).count()
+    total_points = 0
+    for game in game_list_1:
+        total_points += game.player_1_points
     game_list_2 = SinglesGame.objects.filter(player_2=current_player)
+    game_list_2_wins = game_list_2.filter(player_2_points=10).count()
+    for game in game_list_2:
+        total_points += game.player_2_points
+    wins = game_list_1_wins + game_list_2_wins
+    total_games = game_list_1.count() + game_list_2.count()
+    points_per_game = float(total_points) / float(total_games)
+    points_per_game = "%.3f" % (points_per_game)
+    losses = total_games - wins
     game_list = game_list_1 | game_list_2
+    
     return render(request, 'stats/player_detail.html',
                   {'player': current_player,
-                   'game_list': game_list},
+                   'game_list': game_list,
+                   'rank_num': rank_num,
+                   'wins':wins,
+                   'total_games':total_games,
+                   'losses':losses,
+                   'player_count':player_count,
+                   'points_per_game':points_per_game},
                   content_type="html")
 
 def teams(request):
@@ -47,12 +75,37 @@ def team_lookup(request,slug):
 
 def team_detail(request, id):
     current_team = Team.objects.get(id=id)
+    all_teams = Team.objects.all().order_by('-rating')
+    team_count = all_teams.count()
+    rank_num = 0
+    for index, team in enumerate(all_teams):
+        if team == current_team:
+            rank_num = index+1
     game_list_1 = DoublesGame.objects.filter(team_a=current_team)
+    game_list_1_wins = game_list_1.filter(team_a_points=10).count()
+    total_points = 0
+    for game in game_list_1:
+        total_points += game.team_a_points
     game_list_2 = DoublesGame.objects.filter(team_b=current_team)
+    game_list_2_wins = game_list_2.filter(team_b_points=10).count()
+    for game in game_list_2:
+        total_points += game.team_b_points
+    wins = game_list_1_wins + game_list_2_wins
+    total_games = game_list_1.count() + game_list_2.count()
+    points_per_game = float(total_points) / float(total_games)
+    points_per_game = "%.3f" % (points_per_game)
+    losses = total_games - wins
     game_list = game_list_1 | game_list_2
+    
     return render(request, 'stats/team_detail.html',
                   {'team': current_team,
-                   'game_list': game_list},
+                   'game_list': game_list,
+                   'rank_num': rank_num,
+                   'wins':wins,
+                   'total_games':total_games,
+                   'losses':losses,
+                   'team_count':team_count,
+                   'points_per_game':points_per_game},
                   content_type="html")
 
 def create_player(request):
@@ -69,6 +122,24 @@ def create_player(request):
             error_msg = u"Gotta have a name, chief"
     return HttpResponseServerError(error_msg)
 
+def update_player(request):
+    if request.method == "POST":
+        post = request.POST.copy()
+        player = Player.objects.get(slug=post['slug'])
+        if post.has_key('name'):
+            name = post['name']
+            if player.name != name:
+                if Player.objects.filter(name=name).count() > 0:
+                    error_msg = u"Name already taken."
+                    return HttpResponseServerError(error_msg)
+                player.name = name
+        player.save()
+        return_dict = {}
+        return_dict['new_slug'] = player.slug
+        return HttpResponse(json.dumps(return_dict), mimetype="application/json")
+    error_msg = u"No POST data sent."
+    return HttpResponseServerError(error_msg)
+
 def return_team_or_none(player_1, player_2):
     player_1_instance = Player.objects.get(slug=player_1)
     player_2_instance = Player.objects.get(slug=player_2)
@@ -78,7 +149,9 @@ def return_team_or_none(player_1, player_2):
     second_try = Team.objects.filter(player_1=player_2_instance, player_2=player_1_instance)
     if second_try.count() > 0:
         return second_try[0]
-    return None
+    else:
+        new_team = Team.objects.create(player_1=player_1_instance, player_2=player_2_instance)
+        return new_team
 
 def create_team(request):
     error_msg = u"No POST data sent."
@@ -139,8 +212,9 @@ def singles_game_detail(request, id):
 
 def singles_game_list(request):
     singles_game_list = SinglesGame.objects.all()
+    player_list = Player.objects.all().order_by('-rating')
     return render(request, 'stats/singles_game_list.html',
-                  {'singles_game_list':singles_game_list},
+                  {'singles_game_list':singles_game_list, 'player_list':player_list},
                   content_type="html")
 
 def doubles_game_detail(request, id):
@@ -151,6 +225,7 @@ def doubles_game_detail(request, id):
 
 def doubles_game_list(request):
     doubles_game_list = DoublesGame.objects.all()
+    team_list = Team.objects.all().order_by('-rating')
     return render(request, 'stats/doubles_game_list.html',
-                  {'doubles_game_list':doubles_game_list},
+                  {'doubles_game_list':doubles_game_list, 'team_list':team_list},
                   content_type="html")

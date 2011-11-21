@@ -1,13 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="list">
-  <h2>Doubles Games</h2>
-  {% for game in doubles_game_list %}
-  <div class="game">
-  <a href="{{ game.get_absolute_url }}">{{ game.team_a }} VS {{ game.team_b }} </a><br>
-  {{ game.team_a_points }} - {{ game.team_b_points }}, 
-  <small>recorded {{ game.date_played }}</small>
+  <div class="doubles_list_content">
+  <div class="list_spacer">
   </div>
-  {% endfor %}
+    <div class="recent">
+      <div class="box_top">
+	<span class="box_message"><b>Recent Doubles happenings...</b></span>
+      </div>
+      <div class="recent_body">  
+	{% for game in doubles_game_list|slice:":5" %}
+	<div class="game">
+	  <a href="{{ game.get_absolute_url }}">{{ game.team_a }} VS {{ game.team_b }} </a><br>
+	  {{ game.team_a_points }} - {{ game.team_b_points }}, 
+	  <small>recorded {{ game.date_played }}</small>
+	</div>
+	{% if not forloop.last %} <hr class="gamehr"/> {% endif %}
+	{% endfor %}
+      </div>
+    </div>
+    <div class="index_right">
+      <div class="top_doubles">
+      <div class="box_top">
+	<span class="box_message"><b>All Teams</b></span>
+      </div>
+      <div class="top_inner">
+      <div class="box_sidebar">
+      {% for team in team_list %}
+      <div class="sidebar_team">
+      <div class="sidebar_team_players">
+      {{forloop.counter}}. 
+      <a href="{{team.get_absolute_url}}">{{team.player_1.name}}<br/>&nbsp;&nbsp;&nbsp;
+	{{team.player_2.name}}</a>
+      </div>
+      <div class="sidebar_team_rating">
+	{{team.rating}}
+      </div>
+      </div>
+      <br/><br/><br/>
+      {% endfor %}
+      </div>
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

@@ -1,20 +1,68 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="list">
-<div class="team_detail">
-  <h2> <a href="{{ team.player_1.get_absolute_url }}">{{ team.player_1.name }}</a> - 
-       <a href="{{ team.player_2.get_absolute_url }}">{{ team.player_2.name }}</a> </h2>
-  <h2>Rating:   {{ team.rating }} </h2>
-  <div class ="game_detail">
-    <h3>&nbsp;&nbsp;&nbsp;&nbsp; Recently Played Games </h3>
-    <ul>
-      {% for game in game_list %}
-      <li><a href="{{ game.get_absolute_url }}"> {{ game.team_a }} VERSUS {{ game.team_b }}</a><br/>
-	SCORE: {{ game.team_a_points }} - {{ game.team_b_points }}, 
-        <small>recorded {{ game.date_played }}</small></li>
-      {% endfor %}
-    </ul>
+  <div class="motto">
+    <span class="motto"> Team detail:&nbsp;&nbsp; {{team}}</span>
   </div>
+<div class="detail_top">
+  <div class="current_rank detail_mini">
+    <div class="box_top">
+      <span class="box_message">Current Rank</span>
+    </div>
+    <div class="current_rank_inner detail_inner">
+      {{rank_num}} of {{team_count}}
+    </div>
+  </div>
+  <div class="current_rating detail_mini">
+    <div class="box_top">
+      <span class="box_message">Current Rating</span>
+    </div>
+    <div class="current_rating_inner detail_inner">
+      {{team.rating}}
+    </div>
+  </div>
+  <div class="win_ratio detail_mini">
+    <div class="box_top">
+      <span class="box_message">Total Wins / Total Games</span>
+    </div>
+      <img src="/media/Crown-08.png"/>
+    <div class="win_ratio_inner detail_inner">
+      {{wins}} / {{total_games}}
+    </div>
+  </div>
+  <div class="loss_ratio detail_mini">
+    <div class="box_top">
+      <span class="box_message">Total Losses / Total Games</span>
+    </div>
+      <img src="/media/LossSymbol-16.png"/>
+    <div class="loss_ratio_inner detail_inner">
+      {{losses}} / {{total_games}}
+    </div>
+  </div>
+  <div class="avg_points">
+    <div class="box_top">
+      <span class="box_message">Points / Game</span>
+    </div>
+    <div class="avg_points_inner detail_inner">
+      {{points_per_game}}
+    </div>
+  </div>
+</div>
+<br/><br/><br/>
+<div class="detail_recent">
+    <div class="box_top">
+      <span class="box_message"><b>Recent Happenings...</b></span>
+    </div>
+    <div class="detail_recent_inner">
+      {% for game in game_list %}
+	<div class="game">
+	  <a href="{{ game.get_absolute_url }}">{{ game.team_a }} VS {{ game.team_b }} </a><br>
+	  {{ game.team_a_points }} - {{ game.team_b_points }}, 
+	  <small>recorded {{ game.date_played }}</small>
+	</div>
+	{% if not forloop.last %} <hr class="gamehr"/> {% endif %}
+	{% endfor %}
+    </div>
 </div>
 </div>
 {% endblock %}

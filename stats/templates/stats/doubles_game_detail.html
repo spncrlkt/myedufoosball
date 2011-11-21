@@ -2,21 +2,45 @@
 {% block content %}
 <div class="list">
 <div class="both_teams">
-<div id="team_a" class="home_team">
+<div class="box_top">
+  <span class="box_message"><b>Game Detail</b></span>
+</div>
+  <div class="date">
+  <span class="date"><i>{{ game.date_played }}</i></span>
+  </div>
+<div id="player_1" class="home_team">
+  <div class="crown">
+  {% if game.team_a_points == 10 %}
+  <img src="/media/Crown-08.png">
+  {% endif %}
+  </div>
   <div class="inner_team">
-  <h2><a href="{{ game.team_a.get_absolute_url }}">{{ game.team_a }}</a></h2><br/>
-  <h3>Rating: {{ game.team_a.rating }}</h3>
-  <h3>Score: {{ game.team_a_points }}</h3>
+  <a href="{{ game.team_a.get_absolute_url }}"><b>{{ game.team_a }}</b></a><br/><br/><br/><br/>
+  <span class="rating_title">Current Rating:</span> 
+  <br/><span class="current_rating">{{ game.team_a.rating }}</span>
+  <br/><br/><br/><span class="rating_title"> Score:</span>
+  <br/><span class="current_rating">{{ game.team_a_points }}</span>
   </div>
 </div>
-<div id="team_b" class="away_team">
+<div class="divider">
+  <img class="divider" src="/media/VSdivider-09.png"/>
+</div>
+<div id="player_2" class="away_team">
+  <div class="crown">
+  {% if game.team_b_points == 10 %}
+  <img src="/media/Crown-08.png">
+  {% endif %}
+  </div>
   <div class="inner_team">
-  <h2><a href="{{ game.team_b.get_absolute_url }}">{{ game.team_b }}</a></h2><br/>
-  <h3>Rating: {{ game.team_b.rating }}</h3>
-  <h3>Score: {{ game.team_b_points }}</h3>
+  <a href="{{ game.team_b.get_absolute_url }}"><b>{{ game.team_b }}</b></a><br/><br/><br/><br/>
+  <span class="rating_title">Current Rating:</span> 
+  <br/><span class="current_rating">{{ game.team_b.rating }}</span>
+  <br/><br/><br/><span class="rating_title"> Score:</span>
+  <br/><span class="current_rating">{{ game.team_b_points }}</span>
+
   </div>
 </div>
-<h3>Match played:</br>{{ game.date_played }}</h3>
 </div>
 </div>
+
 {% endblock %}

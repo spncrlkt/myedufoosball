@@ -1,6 +1,9 @@
+comment system
+icons
 edit/remove players, games
 sanctioned/non-sanctioned
 "Ranking" table
 update rating algo
 player search
 talk to zack about interface
+move "add players" to add game page

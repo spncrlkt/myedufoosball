@@ -11,6 +11,8 @@ urlpatterns = patterns(
     #AJAXY POST
     (r'createplayer/$',
      'stats.views.create_player'),
+    (r'update_player/$',
+     'stats.views.update_player'),
     (r'^teams/$',
      'stats.views.teams'),
     (r'^teams/(?P<id>\d+)/$',
