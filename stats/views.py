@@ -41,6 +41,8 @@ def player_detail(request, slug):
         total_points += game.player_2_points
     wins = game_list_1_wins + game_list_2_wins
     total_games = game_list_1.count() + game_list_2.count()
+    if total_games == 0:
+        total_games = 1
     points_per_game = float(total_points) / float(total_games)
     points_per_game = "%.3f" % (points_per_game)
     losses = total_games - wins
