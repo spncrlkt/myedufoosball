@@ -216,7 +216,9 @@ select.post_select {
     border: 1px solid black;
 }
 .detail_mini img {
-    height:50px;
+    margin-top:10px;
+    margin-left:10px;
+    height:40px;
     float:left;
 }
 
