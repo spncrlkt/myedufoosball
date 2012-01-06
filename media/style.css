@@ -265,6 +265,11 @@ select.post_select {
     overflow-x:hide;
 }
 
+.bottom_spacer {
+    background-color:white;
+    height:10px;
+}
+
 .detail_inner {
     position:relative;
     font-size:1.6em;

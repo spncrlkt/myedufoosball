@@ -4,8 +4,9 @@
   <div class="motto">
   <span class="motto"> The best <b>free</b> way to kill your productivity. </span>
   <div/>
+  <br/>
   <div class="index_content">
-    <div class="recent">
+    <div class="recent round">
       <div class="box_top">
 	<span class="box_message"><b>Recent happenings...</b></span>
       </div>
@@ -21,7 +22,7 @@
       </div>
     </div>
     <div class="index_right">
-      <div class="top_players">
+      <div class="top_players round">
       <div class="box_top">
 	<span class="box_message"><b>Top 5 Players</b></span>
       </div>
@@ -40,10 +41,11 @@
 	  {% endfor %}
 	  </div>
       </div>
-      <div class="top_teams">
+      <div class="top_teams round">
       <div class="box_top">
 	<span class="box_message"><b>Top 5 Teams</b></span>
       </div>
+
       <div class="box_sidebar">
       {% for team in team_list|slice:":5" %}
       <div class="sidebar_team">

@@ -4,7 +4,7 @@
 <div class="motto">
 <span class="motto"><b>Post</b> a game!</span>
 </div>
-<div id="addgame">
+<div id="addgame" class="round">
   <form method="POST" action="/addgame/">{% csrf_token %}
     <select id="game_type" name="game_type" class="post_select">
       <option value="singles">Singles</option>
